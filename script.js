@@ -1,66 +1,70 @@
-const divBandeiras =  document.getElementById("bandeiras");
-const divInformacao = document.getElementById("informacoes");
+const divFlags =  document.getElementById("flags");
+const divInformations = document.getElementById("informations");
 
-async function getBandeiras() {
+async function getFlags() {
   const response = await fetch("https://mauriciodiias.github.io/estadosDoBrasil/data.json");
   const data = await response.json();
   return data.estados;
 }
 
-async function showBandeiras() {
-  const estados = await getBandeiras();
-  estados.map(estado => {
+async function showFlags() {
+  const estados = await getFlags();
+  estados.map(state => {
     const div = document.createElement('div');
 
     const img = document.createElement('img');
-    img.src = `${estado.bandeira_url}`;
-    img.className = 'bandeira';
-    img.setAttribute('onclick', `showDescricao("${estado.nome}")`);
+    img.src = `${state.bandeira_url}`;
+    img.className = 'flag';
+    img.setAttribute('onclick', `showDescription("${state.nome}")`);
 
     const figcaption = document.createElement('figcaption');
-    figcaption.textContent = `${estado.nome}`;
+    figcaption.textContent = `${state.nome}`;
     
     div.appendChild(img);
     div.appendChild(figcaption);
-    divBandeiras.appendChild(div);
+    divFlags.appendChild(div);
   });
 }
 
-async function showDescricao(nome) {
-  divInformacao.innerHTML = ""
-  const estados = await getBandeiras();
-  estados.map(estado => {
-    console.log(nome)
-    if(estado.nome == nome){
-      const ul = document.createElement('ul');
-      let li = document.createElement("li");
+async function showDescription(name) {
+  divInformations.innerHTML = "";
+  const estados = await getFlags();
+  estados.map(state => {
+    if(state.nome == name){
+      const div = document.createElement('div');
+      div.className = 'div-info';
+      divInformations.appendChild(div);
       
-      let h3 = document.createElement("p");
-      h3.textContent = estado.descricao;
-    
-      let clima = document.createElement("p");
-      clima.innerHTML = `Clima: ${estado.clima}`;
-    
-      let habitantes = document.createElement("p");
-      habitantes.innerHTML = `Habitantes: ${estado.habitantes}`;
-    
-      let area= document.createElement("p");
-      area.innerHTML = `Área: ${estado.area_km2} km²`;
+      let h1 = document.createElement('h1');
+      h1.textContent = state.nome;
+      h1.className = 'name-info';
+      div.appendChild(h1);
       
-      let mapa = document.createElement("img");
-      mapa.setAttribute("src", estado.mapa_url);
-      mapa.setAttribute("width", "100px");
-  
-      li.appendChild(h3);
-      li.appendChild(clima);
-      li.appendChild(habitantes);
-      li.appendChild(area);
-      li.appendChild(mapa);
-      ul.appendChild(li);
-      divInformacao.appendChild(ul);
+      let description = document.createElement("p");
+      description.textContent = state.description;
+      description.className = 'description-info'
+      div.appendChild(description);
+      
+      let climate = document.createElement("p");
+      climate.className = 'description-info'
+      climate.innerHTML = `${state.climate}`;
+      div.appendChild(climate);
+    
+      let divData = document.createElement('div');
+      divData.className = 'data-info';
+      div.appendChild(divData);
+
+      let population = document.createElement("div");
+      population.innerHTML = `<img class='img-icon population' src='https://www.pikpng.com/pngl/b/53-532523_white-person-icon-png-clipart.png' /><br/>${estado.habitantes} <br/> HABITANTES`;
+      population.className = 'data';
+      divData.appendChild(population);
+    
+      let area = document.createElement("p");
+      area.innerHTML = `<img class='img-icon area' src='https://static.thenounproject.com/png/1043924-200.png' /><br/>${estado.area_km2} km²<br/>ÁREA`;
+      area.className = 'data';            
+      divData.appendChild(area);
     }
   });
 }
 
-showBandeiras();
-
+window.onload = showFlags();
