@@ -41,13 +41,13 @@ async function showDescription(name) {
       div.appendChild(h1);
       
       let description = document.createElement("p");
-      description.textContent = state.description;
+      description.textContent = state.descricao;
       description.className = 'description-info'
       div.appendChild(description);
       
       let climate = document.createElement("p");
       climate.className = 'description-info'
-      climate.innerHTML = `${state.climate}`;
+      climate.innerHTML = `${state.clima}`;
       div.appendChild(climate);
     
       let divData = document.createElement('div');
@@ -55,12 +55,12 @@ async function showDescription(name) {
       div.appendChild(divData);
 
       let population = document.createElement("div");
-      population.innerHTML = `<img class='img-icon population' src='https://www.pikpng.com/pngl/b/53-532523_white-person-icon-png-clipart.png' /><br/>${estado.habitantes} <br/> HABITANTES`;
+      population.innerHTML = `<img class='img-icon population' src='https://www.pikpng.com/pngl/b/53-532523_white-person-icon-png-clipart.png' /><br/>${state.habitantes} <br/> HABITANTES`;
       population.className = 'data';
       divData.appendChild(population);
     
       let area = document.createElement("p");
-      area.innerHTML = `<img class='img-icon area' src='https://static.thenounproject.com/png/1043924-200.png' /><br/>${estado.area_km2} km²<br/>ÁREA`;
+      area.innerHTML = `<img class='img-icon area' src='https://static.thenounproject.com/png/1043924-200.png' /><br/>${state.area_km2} km²<br/>ÁREA`;
       area.className = 'data';            
       divData.appendChild(area);
     }
